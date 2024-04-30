@@ -4,6 +4,7 @@
 * table of contents :toc:
 - [[#initial-loading][initial loading]]
   - [[#elpaca-package-manager][elpaca package manager]]
+- [[#general-keybindings][general keybindings]]
 - [[#graphical-user-interface-tweaks][graphical user interface tweaks]]
   - [[#disable-menubar-toolbars-and-scrollbars][disable menubar, toolbars and scrollbars]]
   - [[#display-line-numbers-and-truncated-lines][display line numbers and truncated lines]]
@@ -95,7 +96,7 @@
   (setq use-package-always-ensure t)
 #+end_src
 
-*** general keybindings
+* general keybindings
 
 #+begin_src emacs-lisp
   (setq ns-right-option-modifier 'hyper)
@@ -193,7 +194,7 @@ this is an icon set that can be used with emacs programs
 #+begin_src emacs-lisp
 
   (use-package counsel
-    :after ivy
+    :after (ivy)
     :config (counsel-mode))
 
   (use-package ivy
@@ -289,6 +290,7 @@ set theme directory and load chosen theme
 
   ;; configure and load modus dark theme, to load ligh theme
   ;; use modus-operandi
+  (require-theme 'modus-themes)
   (setq modus-themes-italic-constructs t
         modus-themes-bold-constructs nil)
   ;; define some palette overrides, such as by using our presets
