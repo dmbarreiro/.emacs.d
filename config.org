@@ -4,6 +4,8 @@
 * table of contents :toc:
 - [[#initial-loading][initial loading]]
   - [[#elpaca-package-manager][elpaca package manager]]
+- [[#loading-files][loading files]]
+  - [[#buffer-move][buffer move]]
 - [[#general-keybindings][general keybindings]]
 - [[#graphical-user-interface-tweaks][graphical user interface tweaks]]
   - [[#disable-menubar-toolbars-and-scrollbars][disable menubar, toolbars and scrollbars]]
@@ -96,6 +98,18 @@
   (setq use-package-always-ensure t)
 #+end_src
 
+* loading files
+
+** buffer move
+
+#+begin_src emacs-lisp
+
+;; in root of emacs dir with other config files for the moment
+;; may be moved to specific lib folder in the future if amount of libs grow
+(load (expand-file-name (concat user-emacs-directory "libs/buffer-move")))
+  
+#+end_src
+
 * general keybindings
 
 #+begin_src emacs-lisp
@@ -125,6 +139,7 @@
     (general-def
      "H-." '(find-file :wk "Find file")
      "H-;" '(comment-line :wk "Comment line")
+     "H-f r" '(counsel-recentf :wk "Find recent files")
      "H-f c" '((lambda () (interactive) (find-file "~/.emacs.d/config.org")) :wk "Edit emacs config"))
 
     (general-def
@@ -138,15 +153,34 @@
       "H-t l" '(display-line-numbers-mode :wk "Toggle line numbers")
       "H-t t" '(visual-line-mode :wk "Toggle truncated lines"))
 
+    (general-def
+      "H-w" '(:ignore t :wk "Window")
+      ;; window splits
+      "H-w h" '(split-window-horizontally :wk "Horizontal split window")
+      "H-w v" '(split-window-vertically :wk "Vertical split window")
+      "H-w c" '(delete-window :wk "Close window")
+      ;; window motions
+      "H-w <left>" '(windmove-left :wk "Move to window on the left")
+      "H-w <right>" '(windmove-right :wk "Move to window on the right")
+      "H-w <up>" '(windmove-up :wk "Move to window above")
+      "H-w <down>" '(windmove-down :wk "Move to window below")
+      ;; move windows  
+      "H-w S-<left>" '(buf-move-left :wk "Buffer move left")
+      "H-w S-<right>" '(buf-move-right :wk "Buffer move right")
+      "H-w S-<up>" '(buf-move-up :wk "Buffer move up")
+      "H-w S-<down>" '(buf-move-down :wk "Buffer move down"))
+
   )
 
 #+end_src
 
 #+begin_src emacs-lisp
+
 (global-set-key (kbd "C-=") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
 (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
 (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
+
 #+end_src
 
 * graphical user interface tweaks

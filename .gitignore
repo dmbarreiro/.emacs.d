@@ -1,6 +1,7 @@
 
 elpaca
-
 auto-save-list
-
 config.el
+
+# counsel recent files
+recentf
