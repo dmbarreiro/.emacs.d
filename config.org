@@ -8,6 +8,7 @@
   - [[#elpaca-package-manager][elpaca package manager]]
 - [[#loading-files][loading files]]
   - [[#buffer-move][buffer move]]
+- [[#system-keybindings][system keybindings]]
 - [[#general-keybindings][general keybindings]]
 - [[#graphical-user-interface-tweaks][graphical user interface tweaks]]
   - [[#disable-menubar-toolbars-and-scrollbars][disable menubar, toolbars and scrollbars]]
@@ -24,7 +25,6 @@
 
 * my todo
 
-+ move system sensitive keybindings (macos) to its own 
 + explore the possibility of setting hyper as leader key and lift the prefix key instead of defining H- as prefix on each new general keybinding
    
 * initial loading
@@ -117,10 +117,21 @@
   
 #+end_src
 
+* system keybindings
+keybindings that are system dependent and are used as the base for all other combinations defined in this config file
+
+#+begin_src emacs-lisp
+
+  ;; macos
+  ;; set right option button as hyper
+  (setq ns-right-option-modifier 'hyper)
+
+#+end_src
+
 * general keybindings
 
 #+begin_src emacs-lisp
-  (setq ns-right-option-modifier 'hyper)
+
   (use-package general
     :ensure (:wait t)
     :demand t
