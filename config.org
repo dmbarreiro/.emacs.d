@@ -1,7 +1,9 @@
 #+title: dmbarreiro's GNU Emacs Config
 #+author: David Martinez Barreiro (dmbarreiro)
 
+
 * table of contents :toc:
+- [[#my-todo][my todo]]
 - [[#initial-loading][initial loading]]
   - [[#elpaca-package-manager][elpaca package manager]]
 - [[#loading-files][loading files]]
@@ -20,6 +22,11 @@
 - [[#theme][theme]]
 - [[#which-key][which-key]]
 
+* my todo
+
++ move system sensitive keybindings (macos) to its own 
++ explore the possibility of setting hyper as leader key and lift the prefix key instead of defining H- as prefix on each new general keybinding
+   
 * initial loading
 
 ** elpaca package manager
