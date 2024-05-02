@@ -144,8 +144,8 @@
      "H-e r" '(eval-region :wk "Evaluate elisp in region"))
 
     (general-def
-     "H-." '(find-file :wk "Find file")
-     "H-;" '(comment-line :wk "Comment line")
+     "H-f ." '(find-file :wk "Find file")
+     "H-f ;" '(comment-line :wk "Comment line")
      "H-f r" '(counsel-recentf :wk "Find recent files")
      "H-f c" '((lambda () (interactive) (find-file "~/.emacs.d/config.org")) :wk "Edit emacs config"))
 
