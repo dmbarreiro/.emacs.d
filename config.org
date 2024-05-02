@@ -137,56 +137,59 @@ keybindings that are system dependent and are used as the base for all other com
     :demand t
     :config
 
-    (general-def
-     "H-b" '(:ignore t :which-key "buffer")
-     "H-b b" '(switch-to-buffer :which-key "Switch buffer")
-     "H-b i" '(ibuffer :wk "Ibuffer")
-     "H-b k" '(kill-this-buffer :which-key "Kill this buffer")
-     "H-b n" '(next-buffer :which-key "Next buffer")
-     "H-b p" '(previous-buffer :which-key "Previous buffer")
-     "H-b r" '(revert-buffer :which-key "Reload buffer"))
+    (general-create-definer my-leader
+      :prefix "H-<left>")
 
-    (general-def
-     "H-e" '(:ignore t :wk "Evaluate")
-     "H-e b" '(eval-buffer :wk "Evaluate elisp in buffer")
-     "H-e d" '(eval-defun :wk "Evaluate defun containing or after point")
-     "H-e e" '(eval-expression :wk "Evaluate an elisp expression")
-     "H-e l" '(eval-last-sexp :wk "Evaluate elisp expression before point")
-     "H-e r" '(eval-region :wk "Evaluate elisp in region"))
+    (my-leader
+     "b" '(:ignore t :which-key "buffer")
+     "b b" '(switch-to-buffer :which-key "Switch buffer")
+     "b i" '(ibuffer :wk "Ibuffer")
+     "b k" '(kill-this-buffer :which-key "Kill this buffer")
+     "b n" '(next-buffer :which-key "Next buffer")
+     "b p" '(previous-buffer :which-key "Previous buffer")
+     "b r" '(revert-buffer :which-key "Reload buffer"))
 
-    (general-def
-     "H-f ." '(find-file :wk "Find file")
-     "H-f ;" '(comment-line :wk "Comment line")
-     "H-f r" '(counsel-recentf :wk "Find recent files")
-     "H-f c" '((lambda () (interactive) (find-file "~/.emacs.d/config.org")) :wk "Edit emacs config"))
+    (my-leader
+     "e" '(:ignore t :wk "Evaluate")
+     "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
+     "e d" '(eval-defun :wk "Evaluate defun containing or after point")
+     "e e" '(eval-expression :wk "Evaluate an elisp expression")
+     "e l" '(eval-last-sexp :wk "Evaluate elisp expression before point")
+     "e r" '(eval-region :wk "Evaluate elisp in region"))
 
-    (general-def
-      "H-h" '(:ignore t :wk "Help")
-      "H-h f" '(describe-function :wk "Describe function")
-      "H-h v" '(describe-variable :wk "Describe variable")
-      "H-h r" '((lambda () (interactive) (load-file "~/.emacs.d/init.el")) :wk "Reload emacs config"))
+    (my-leader
+     "f ." '(find-file :wk "Find file")
+     "f ;" '(comment-line :wk "Comment line")
+     "f r" '(counsel-recentf :wk "Find recent files")
+     "f c" '((lambda () (interactive) (find-file "~/.emacs.d/config.org")) :wk "Edit emacs config"))
 
-    (general-def
-      "H-t" '(:ignore t :wk "Toggle")
-      "H-t l" '(display-line-numbers-mode :wk "Toggle line numbers")
-      "H-t t" '(visual-line-mode :wk "Toggle truncated lines"))
+    (my-leader
+      "h" '(:ignore t :wk "Help")
+      "h f" '(describe-function :wk "Describe function")
+      "h v" '(describe-variable :wk "Describe variable")
+      "h r" '((lambda () (interactive) (load-file "~/.emacs.d/init.el")) :wk "Reload emacs config"))
 
-    (general-def
-      "H-w" '(:ignore t :wk "Window")
+    (my-leader
+      "t" '(:ignore t :wk "Toggle")
+      "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
+      "t t" '(visual-line-mode :wk "Toggle truncated lines"))
+
+    (my-leader
+      "w" '(:ignore t :wk "Window")
       ;; window splits
-      "H-w h" '(split-window-horizontally :wk "Horizontal split window")
-      "H-w v" '(split-window-vertically :wk "Vertical split window")
-      "H-w c" '(delete-window :wk "Close window")
+      "w h" '(split-window-horizontally :wk "Horizontal split window")
+      "w v" '(split-window-vertically :wk "Vertical split window")
+      "w c" '(delete-window :wk "Close window")
       ;; window motions
-      "H-w <left>" '(windmove-left :wk "Move to window on the left")
-      "H-w <right>" '(windmove-right :wk "Move to window on the right")
-      "H-w <up>" '(windmove-up :wk "Move to window above")
-      "H-w <down>" '(windmove-down :wk "Move to window below")
+      "w <left>" '(windmove-left :wk "Move to window on the left")
+      "w <right>" '(windmove-right :wk "Move to window on the right")
+      "w <up>" '(windmove-up :wk "Move to window above")
+      "w <down>" '(windmove-down :wk "Move to window below")
       ;; move windows  
-      "H-w S-<left>" '(buf-move-left :wk "Buffer move left")
-      "H-w S-<right>" '(buf-move-right :wk "Buffer move right")
-      "H-w S-<up>" '(buf-move-up :wk "Buffer move up")
-      "H-w S-<down>" '(buf-move-down :wk "Buffer move down"))
+      "w S-<left>" '(buf-move-left :wk "Buffer move left")
+      "w S-<right>" '(buf-move-right :wk "Buffer move right")
+      "w S-<up>" '(buf-move-up :wk "Buffer move up")
+      "w S-<down>" '(buf-move-down :wk "Buffer move down"))
 
   )
 
