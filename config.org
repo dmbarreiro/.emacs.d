@@ -23,6 +23,7 @@
   - [[#eshell][eshell]]
   - [[#vterm][vterm]]
   - [[#vterm-toggle][vterm-toggle]]
+- [[#rainbow-mode][rainbow mode]]
 - [[#theme][theme]]
 - [[#which-key][which-key]]
 
@@ -391,9 +392,6 @@ you should be able to execute vterm in emacs now
 vterm-toggle toggles between vterm buffeer and whatever buffer you are editing
 
 #+begin_src emacs-lisp
-  ;(custom-set-variables
-  ;  '(exec-path
-  ;   '("/usr/bin" "/usr/local/bin" "/bin" "/usr/sbin" "/sbin" "/Applications/Emacs.app/Contents/MacOS/libexec")))
 
   (use-package vterm-toggle
     :after vterm
@@ -412,12 +410,25 @@ vterm-toggle toggles between vterm buffeer and whatever buffer you are editing
 
 #+end_src
 
+* rainbow mode
+display actual color as background for any hex color value
+
+#+begin_src emacs-lisp
+
+  ;; enables rainbow-mode in all programming modes and org mode
+  (use-package rainbow-mode
+    :hook org-mode prog-mode)
+
+#+end_src
 
 * theme
 set theme directory and load chosen theme
 
 #+begin_src emacs-lisp
   (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
+  ;; above themes directory should have a .el file containing theme config
+  ;; providing theme theme-name -> (provide-theme 'theme-name)
+  ;; (load-theme 'theme-name t)
 
   ;; configure and load modus dark theme, to load ligh theme
   ;; use modus-operandi
