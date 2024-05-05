@@ -19,6 +19,10 @@
   - [[#enabling-org-bullets][enabling org bullets]]
   - [[#disable-electric-indent][disable electric indent]]
   - [[#source-code-block-tag-expansion][source code block tag expansion]]
+- [[#shells-and-terminals][shells and terminals]]
+  - [[#eshell][eshell]]
+  - [[#vterm][vterm]]
+  - [[#vterm-toggle][vterm-toggle]]
 - [[#theme][theme]]
 - [[#which-key][which-key]]
 
@@ -150,7 +154,9 @@ keybindings that are system dependent and are used as the base for all other com
      "e d" '(eval-defun :wk "Evaluate defun containing or after point")
      "e e" '(eval-expression :wk "Evaluate an elisp expression")
      "e l" '(eval-last-sexp :wk "Evaluate elisp expression before point")
-     "e r" '(eval-region :wk "Evaluate elisp in region"))
+     "e r" '(eval-region :wk "Evaluate elisp in region")
+     "e h" '(counsel-esh-history :which-key "Eshell history")
+     "e s" '(eshell :which-key "Eshell"))
 
     (my-leader
      "f ." '(find-file :wk "Find file")
@@ -167,7 +173,8 @@ keybindings that are system dependent and are used as the base for all other com
     (my-leader
       "t" '(:ignore t :wk "Toggle")
       "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
-      "t t" '(visual-line-mode :wk "Toggle truncated lines"))
+      "t t" '(visual-line-mode :wk "Toggle truncated lines")
+      "t v" '(vterm-toggle :wk "Toggle vterm"))
 
     (my-leader
       "w" '(:ignore t :wk "Window")
@@ -328,9 +335,83 @@ org-tempo is a module within org that allows for different types of expansions t
 
 #+begin_src emacs-lisp
 
-(require 'org-tempo)
+  (require 'org-tempo)
 
 #+end_src
+
+* shells and terminals
+
+** eshell
+eshell is an emacs shell that is written in elisp
+
+#+begin_src emacs-lisp
+
+  ;; add syntax highlighting to eshell
+  (use-package eshell-syntax-highlighting
+    :after esh-mode
+    :config
+    (eshell-syntax-highlighting-global-mode +1))
+
+  ;; add eshellrc (like bashrc for eshell)
+  ;; and alias file for eshell
+  (setq eshell-rc-script (concat user-emacs-directory "eshell/profile")
+        eshell-aliases-file (concat user-emacs-directory "eshell/aliases")
+        eshell-history-size 5000
+        eshell-buffer-maximum-lines 5000
+        eshell-hist-ignoredups t
+        eshell-scroll-to-bottom-on-input t
+        eshell-destroy-buffer-when-process-dies t
+        eshell-visual-commands '("bash" "fish" "htop" "ssh" "top" "zsh"))
+
+#+end_src
+
+** vterm
+vterm is a terminal emulator within emacs. We set the default vterm shell to zsh.
+To install vterm in macos, while compiling I was getting the error CMake not found when CMake was installed in the system, to solve this I manually compiled vterm following the instruction in [[https://github.com/akermu/emacs-libvterm/issues/169#issuecomment-568668946][here]]:
+
+1. ~cd ~/.emacs.d/elpaca/builds/vterm~
+2. with CMake and libtool installed and accessible in path execute
+   + ~mkdir -p build~
+   + ~cd build~
+   + ~cmake ..~
+   + ~make~
+
+you should be able to execute vterm in emacs now
+
+#+begin_src emacs-lisp
+
+  (use-package vterm
+    :config
+    (setq shell-file-name "/bin/zsh"
+          vterm-max-scrollback 5000))
+
+#+end_src
+
+** vterm-toggle
+vterm-toggle toggles between vterm buffeer and whatever buffer you are editing
+
+#+begin_src emacs-lisp
+  ;(custom-set-variables
+  ;  '(exec-path
+  ;   '("/usr/bin" "/usr/local/bin" "/bin" "/usr/sbin" "/sbin" "/Applications/Emacs.app/Contents/MacOS/libexec")))
+
+  (use-package vterm-toggle
+    :after vterm
+    :config
+    (setq vterm-toggle-fullsreen-p nil)
+    (setq vterm-toggle-scope 'project)
+    (add-to-list 'display-buffer-alist
+                 '((lambda (buffer-or-name _)
+                     (let ((buffer (get-buffer buffer-or-name)))
+                       (with-current-buffer buffer
+                         (or (equal major-mode 'vterm-mode)
+                             (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
+                   (display-buffer-reuse-window display-buffer-at-bottom)
+                   (reusable-frames . visible)
+                   (window-height . 0.3))))
+
+#+end_src
+
 
 * theme
 set theme directory and load chosen theme

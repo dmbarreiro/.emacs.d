@@ -5,3 +5,6 @@ config.el
 
 # counsel recent files
 recentf
+
+#eshell
+eshell
