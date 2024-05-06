@@ -1,7 +1,6 @@
 #+title: dmbarreiro's GNU Emacs Config
 #+author: David Martinez Barreiro (dmbarreiro)
 
-
 * table of contents :toc:
 - [[#initial-loading][initial loading]]
   - [[#elpaca-package-manager][elpaca package manager]]
@@ -122,9 +121,8 @@ keybindings that are system dependent and are used as the base for all other com
 
 #+begin_src emacs-lisp
 
-  ;; macos
-  ;; set right option button as hyper
-  (setq ns-right-option-modifier 'hyper)
+  ;; clean leader key org mode binding
+  (define-key org-mode-map (kbd "M-RET") nil)
 
 #+end_src
 
@@ -138,7 +136,7 @@ keybindings that are system dependent and are used as the base for all other com
     :config
 
     (general-create-definer my-leader
-      :prefix "H-<left>")
+      :prefix "M-RET")
 
     (my-leader
      "b" '(:ignore t :which-key "buffer")
