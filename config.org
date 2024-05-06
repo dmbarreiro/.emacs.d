@@ -6,7 +6,6 @@
   - [[#elpaca-package-manager][elpaca package manager]]
 - [[#loading-files][loading files]]
   - [[#buffer-move][buffer move]]
-- [[#system-keybindings][system keybindings]]
 - [[#general-keybindings][general keybindings]]
 - [[#graphical-user-interface-tweaks][graphical user interface tweaks]]
   - [[#disable-menubar-toolbars-and-scrollbars][disable menubar, toolbars and scrollbars]]
@@ -23,6 +22,7 @@
   - [[#vterm][vterm]]
   - [[#vterm-toggle][vterm-toggle]]
 - [[#rainbow-mode][rainbow mode]]
+- [[#move-text][move text]]
 - [[#theme][theme]]
 - [[#which-key][which-key]]
 
@@ -116,19 +116,13 @@
   
 #+end_src
 
-* system keybindings
-keybindings that are system dependent and are used as the base for all other combinations defined in this config file
+
+* general keybindings
 
 #+begin_src emacs-lisp
 
   ;; clean leader key org mode binding
   (define-key org-mode-map (kbd "M-RET") nil)
-
-#+end_src
-
-* general keybindings
-
-#+begin_src emacs-lisp
 
   (use-package general
     :ensure (:wait t)
@@ -416,6 +410,28 @@ display actual color as background for any hex color value
   ;; enables rainbow-mode in all programming modes and org mode
   (use-package rainbow-mode
     :hook org-mode prog-mode)
+
+#+end_src
+
+* move text
+MoveText allows you to move current line or region up/down with M-up/M-down or any other keybinding
+
+#+begin_src emacs-lisp
+
+  (use-package move-text
+    :bind
+    (("M-p" . move-text-up)
+     ("M-n" . move-text-down)))
+
+  (defun indent-region-advice (&rest ignored)
+    (let ((deactivate deactivate-mark))
+      (if (region-active-p)
+          (indent-region (region-beginning) (region-end))
+        (indent-region (line-beginning-position) (line-end-position)))
+      (setq deactivate-mark deactivate)))
+
+  (advice-add 'move-text-up :after 'indent-region-advice)
+  (advice-add 'move-text-down :after 'indent-region-advice)
 
 #+end_src
 
