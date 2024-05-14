@@ -6,6 +6,7 @@
   - [[#elpaca-package-manager][elpaca package manager]]
 - [[#loading-files][loading files]]
   - [[#buffer-move][buffer move]]
+- [[#system-keybinding][system keybinding]]
 - [[#general-keybindings][general keybindings]]
 - [[#graphical-user-interface-tweaks][graphical user interface tweaks]]
   - [[#disable-menubar-toolbars-and-scrollbars][disable menubar, toolbars and scrollbars]]
@@ -25,6 +26,7 @@
 - [[#move-text][move text]]
 - [[#theme][theme]]
 - [[#which-key][which-key]]
+- [[#clear-leader-keybinging][clear leader keybinging]]
 
 * initial loading
 
@@ -116,13 +118,19 @@
   
 #+end_src
 
+* system keybinding
+
+#+begin_src emacs-lisp
+  ;; macos
+  ;; map iterm2 code for option+up and option+down to M-<up> and M-<down>
+  (define-key input-decode-map "[[1;9A" [(meta up)])
+  (define-key input-decode-map "[[1;9B" [(meta down)])
+
+#+end_src
 
 * general keybindings
 
 #+begin_src emacs-lisp
-
-  ;; clean leader key org mode binding
-  (define-key org-mode-map (kbd "M-RET") nil)
 
   (use-package general
     :ensure (:wait t)
@@ -131,6 +139,7 @@
 
     (general-create-definer my-leader
       :prefix "M-RET")
+
 
     (my-leader
      "b" '(:ignore t :which-key "buffer")
@@ -420,8 +429,8 @@ MoveText allows you to move current line or region up/down with M-up/M-down or a
 
   (use-package move-text
     :bind
-    (("M-p" . move-text-up)
-     ("M-n" . move-text-down)))
+    (("M-<up>" . move-text-up)
+     ("M-<down>" . move-text-down)))
 
   (defun indent-region-advice (&rest ignored)
     (let ((deactivate deactivate-mark))
@@ -477,5 +486,20 @@ set theme directory and load chosen theme
 	  which-key-max-description-length 25
 	  which-key-allow-imprecise-window-fit t
 	  which-key-separator " → "))
+
+#+end_src
+
+* clear leader keybinging
+our leader key is binded (mostly useless behaviors) in some useful modes so we clear the binding so
+it doesn't override the desired emacs leader key binding
+
+#+begin_src emacs-lisp
+
+  ;; clean leader key org mode binding
+  (define-key org-mode-map (kbd "M-RET") nil)
+  ;; clean leader key binding in vterm
+  (define-key vterm-mode-map (kbd "M-RET") nil)  
+  ;; clean leader key binding in eshell
+  (define-key eshell-mode-map (kbd "M-RET") nil)  
 
 #+end_src
